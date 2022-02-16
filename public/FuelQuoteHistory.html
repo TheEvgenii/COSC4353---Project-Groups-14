@@ -17,47 +17,45 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg bg-warning navbar-light py-3 fixed-top">
             <div class="container">
+                <!-- 
+                <a href="#" class="navbar-brand h2">Fuel Resource</a> -->
+                <div class="row">
+                    <h1>Fuel Resource</h1>
+                </div>
 
-
-                <a href="#" class="navbar-brand">Brend name</a>
-        
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navmenu"
-                >
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-        
+
                 <div class="collapse navbar-collapse" id="navmenu">
                     <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a href="#HomePage" class="nav-link">Home Page</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#Orders" class="nav-link">Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#BuyFuel" class="nav-link">Buy Fuel</a>
-                    </li>
-
-                    </ul>
-
-                    <ul class="nav justify-content-end">
                         <li class="nav-item">
-                            <a class="btn btn-outline-dark" href="signin.html">Log out</a>
+                            <a href="/public/index.html" class="nav-link fw-bolder">Home Page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/public/FuelQuoteHistory.html" class="nav-link fw-bolder">Orders</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#BuyFuel" class="nav-link fw-bolder">Buy Fuel</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-dark fw-bolder" href="signin.html">Log out</a>
                         </li>
                     </ul>
                 </div>
-            </div> 
+                <!-- <ul class="nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="btn btn-outline-dark" href="signin.html">Log out</a>
+                    </li>
+                </ul> -->
+            </div>
         </nav>
 
         <!--ShowCase-->
 
         <section class="bg-dark text-light pt-5 text-center">
             <div class="conrainer">
-                <div class=""> 
+                <div class="">
                     <div>
                         <h1></h1>
                     </div>
@@ -67,7 +65,7 @@
 
         <section class="bg-light text-dark pt-5 text-center">
             <div class="conrainer">
-                <div class=""> 
+                <div class="">
                     <div>
                         <h1> <span class="text-success">Fuel History</span></h1>
                     </div>
@@ -99,49 +97,54 @@
             <div class="container">
                 <table class="table">
                     <thead class="thead-dark">
-                      <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Gallons Requested</th>
-                        <th scope="col">Delivery Date</th>
-                        <th scope="col">Price</th>
-                      </tr>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Gallons Requested</th>
+                            <th scope="col">Delivery Date</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Price per Gallon</th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">11/12/2021</th>
-                        <td>50</td>
-                        <td>11/15/2021</td>
-                        <td>$250</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">12/15/2021</th>
-                        <td>60</td>
-                        <td>12/20/2021</td>
-                        <td>$300</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">01/01/2022</th>
-                        <td>40</td>
-                        <td>01/12/2022</td>
-                        <td>$200</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">05/06/2023</th>
-                        <td>55</td>
-                        <td>05/10/2022</td>
-                        <td>$270</td>
-                      </tr>
+                        <tr>
+                            <th scope="row">11/12/2021</th>
+                            <td>50</td>
+                            <td>11/15/2021</td>
+                            <td>$139.5</td>
+                            <td>$2.79</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">12/15/2021</th>
+                            <td>60</td>
+                            <td>12/20/2021</td>
+                            <td>$161.4</td>
+                            <td>$2.69</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">01/01/2022</th>
+                            <td>40</td>
+                            <td>01/12/2022</td>
+                            <td>$127.6</td>
+                            <td>$3.19</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">05/06/2023</th>
+                            <td>55</td>
+                            <td>05/10/2022</td>
+                            <td>$186.45</td>
+                            <td>$3.39</td>
+                        </tr>
                     </tbody>
-                  </table>
+                </table>
             </div>
         </section>
-        
-          
+
+
 
     </header>
     </div>
-        
-            
+
+
 
 
 
