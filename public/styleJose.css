@@ -11,8 +11,12 @@ body {
 
 nav {
   background: #e9a21f;
-  height: 80px;
+  height: 110px;
   width: 100%;
+}
+
+.navbar-brand {
+  font-size: 30px;
 }
 
 label.logo {
@@ -61,7 +65,7 @@ form {
   width: 1500px;
   margin: auto;
   padding: 100px;
-  background: rgb(221, 221, 221);
+  background: rgb(247, 247, 247);
   font-size: 20px;
   font-family: Verdana;
   color: rgb(0, 0, 0);
