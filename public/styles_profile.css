@@ -1,0 +1,35 @@
+.firstDiv{
+    margin-top: 120px;
+}
+
+.box{
+    border:1px solid #aaa;
+    width:800px;
+    padding:30px;
+    border-radius: 10px;
+    background-color: rgba(253, 255, 218, 0.178);
+}
+.sign-up{
+    width: 500px;
+}
+
+label{
+    display: block;
+    font-weight: 500;
+    margin: 15px 0px;
+}
+.star{
+    color:red;
+}
+
+.btn{
+    margin-top:15px;
+}
+body{
+    background-color: #F9F9F9;
+}
+
+.smalltext{
+    font-weight: 400;
+    font-size: 8pt;
+}
