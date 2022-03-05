@@ -60,3 +60,12 @@ body{
     font-size: 8pt;
     color: black;
 }
+
+#error{
+    display: none;
+    color: red;
+}
+
+.invalid{
+    background-color: #ffdddd;
+}
