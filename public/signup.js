@@ -1,7 +1,4 @@
-let form = document.getElementById("form")
-form.addEventListener("submit", validate)
-
-function validate(event) {
+function validate_signup(event) {
     var username = document.getElementById("username");
     var password = document.getElementById("password");
     var passConfirm = document.getElementById("passwordConf")
@@ -16,9 +13,10 @@ function validate(event) {
 
     }
     if (username.value == "") {
-        errorList.push("Please enter an username")
+        errorList.push("Please enter an username.")
         username.classList.add("invalid")
     }
+
 
     if (password.value.length < 4 || password.value.length > 20) {
         errorList.push("Password must be between 5 and 20 characters.")
@@ -71,3 +69,7 @@ function validate(event) {
         error.innerHTML = html
     }
 }
+
+let form = document.getElementById("form")
+form.addEventListener("submit", validate_signup)
+

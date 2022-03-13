@@ -33,3 +33,12 @@ body{
     font-weight: 400;
     font-size: 8pt;
 }
+
+#error{
+    display: none;
+    color: red;
+}
+
+.invalid{
+    background-color: #ffdddd;
+}

@@ -1,3 +1,5 @@
+
+
 let form = document.getElementById("form")
 form.addEventListener("submit", validate)
 
@@ -8,18 +10,18 @@ function validate(event) {
     var error = document.getElementById("error")
     errorList = []
     if (username.value == "") {
-        errorList.push("Please enter an username")
+        errorList.push("Please enter an username.")
         username.classList.add("invalid")
     }
 
     if (password.value == "") {
-        errorList.push("Please enter password")
+        errorList.push("Please enter password.")
         password.classList.add("invalid")
     }
 
     if (username.value != "" && password.value != "") {
-        if (username.value != "fuel" && password.value != "user") {
-            errorList.push("Username or password is not correct")
+        if (username.value != "fuel" || password.value != "user") {
+            errorList.push("Username or password is not correct.")
             username.classList.add("invalid")
             password.classList.add("invalid")
         }

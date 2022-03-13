@@ -1,43 +1,36 @@
-const { validate} = require("./login.js");
-const { validate} = require("./signup.js");
+document.body.innerHTML = `
+    <form id="form">
+    <input type="text" id="username">
+    <input type="password" id="password">
+    <div id="error"></div>
+    <button id="button" type="submit"></button>
+    </form>
+    `
+require('./login.js');
+var username = document.getElementById("username");
+var password = document.getElementById("password");
+var error = document.getElementById("error")
+var form = document.getElementById("form")
+var button = document.getElementById("button")
 
-test('should output invalid', () =>{
-    const username = validate.username(' "" ');
-    const password = validate.password(' "" ');
-    expect(username).toBe('invalid');
+
+test('check if empty username', () => {
+    username.value = ""
+    password.value = "user"
+    button.click()
+    expect(error.innerHTML).toEqual(`<ul><li>Please enter an username.</li></ul>`)
 })
 
-
-test('check username if it contain at least 4 characters', () =>{
-    const username = validate.username('airdrop');
-    const username2 = validate.username('airinthewater');
-    expect(username).toBe(true);
-    expect(username2).toBe(true);
+test('check if empty password', () => {
+    username.value = "fuel"
+    password.value = ""
+    button.click()
+    expect(error.innerHTML).toEqual(`<ul><li>Please enter password.</li></ul>`)
 })
 
-test('check username if it contain at least 4 characters', () =>{
-    const username = validate.username('air');
-    const username2 = validate.username('airinthewaterandunderthewater');
-    expect(username).toBe(false);
-    expect(username2).toBe(false);
+test('check if username and password are correct', () => {
+    username.value = "fuel"
+    password.value = "123"
+    button.click()
+    expect(error.innerHTML).toEqual(`<ul><li>Username or password is not correct.</li></ul>`)
 })
-
-describe("Help", () => {
-test('check password requirement', () =>{
-    const password = validate.password('adm');
-    expect(password).toBe('Password must be between 5 and 20 characters.');
-
-    const password1 = password('Admin');
-    expect(password1).toBe('Password must contain at least one digit.');
-
-    const password2 = password('admin1');
-    expect(password2).toBe('Password must contain at least one uppercase character.');
-
-    const password3 = password('ADMIN1');
-    expect(password3).toBe('Password must contain at least one lowercase character.');
-
-    const text7 = checkPwd('dvdfvdfvdfvsdsdcsdvdfvfdvsdscdsvdfbvdfvdfcscsdcsdcdsfvsdf');
-    expect(text7).toBe('Password must be between 5 and 20 characters.');
-
-    });
-});
