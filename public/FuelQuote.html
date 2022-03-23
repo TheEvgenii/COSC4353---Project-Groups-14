@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    \
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
@@ -10,8 +11,6 @@
       crossorigin="anonymous"
     />
     <link href="styleJose.css" rel="stylesheet" />
-    <script src = "FuelQuote.js"></script>
-    <script src = "pricing.js"></script>
     <title>Fuel Quote</title>
   </head>
   <body>
@@ -67,15 +66,17 @@
       <section class="bg-light text-dark pt-5 text-center">
         <div class="conrainer">
             <div class=""> 
+            <div class="">
                 <div>
                     <h1> <span class="text-success">Fuel History</span></h1>
                 </div>
       <strong>Gallons Requested:</strong>
-      <input id = "inputGallon" type="text" name="gallonsRequested" placeholder="Enter amount of gallons" /><br /><br />
+      <input type="text" name="gallonsRequested" placeholder="10" /><br /><br />
       <p id="DeliveryAddy"><strong>Delivery Address:</strong><br /><br /></p>
       <address>
-        4800 Calhoun Rd <br>
-        Houston, TX 77004
+        University of Houston<br />
+        4300 Martin Luther King Blvd<br />
+        Houston, TX 77204<br /><br />
       </address>
       <p id="DeliveryDate"><strong>Delivery Date: </strong><br /><br /></p>
       <select name="Month">
@@ -134,17 +135,7 @@
       <p id="pricePer">Price per gallon $2.99</p>
       <p id="Total"><strong>Total: $29.9</strong></p>
       <br />
-      <fieldset>
-        <legend>Price History</legend>
-        <div id = "output"></div>
-      </fieldset>
-      <button type="submit" onclick="save();">Place Order</button> <button type="submit" onclick="view();">View History</button>
+      <button type="submit">Place Order</button>
     </form>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-    <script src="FuelQuote.js"></script>
   </body>
 </html>
-
-
