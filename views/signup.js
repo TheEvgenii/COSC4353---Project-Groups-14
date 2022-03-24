@@ -1,3 +1,7 @@
+var getUserName = require('./app.js')
+
+
+
 function validate_signup(event) {
     var username = document.getElementById("username");
     var password = document.getElementById("password");
@@ -69,7 +73,6 @@ function validate_signup(event) {
         error.innerHTML = html
     }
 }
-
 let form = document.getElementById("form")
 form.addEventListener("submit", validate_signup)
 

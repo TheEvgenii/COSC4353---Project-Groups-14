@@ -19,5 +19,10 @@
   "homepage": "https://github.com/TheEvgenii/COSC4353---Project-Groups-14#readme",
   "devDependencies": {
     "jest": "^27.5.1"
+  },
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "pg": "^8.7.3"
   }
 }
