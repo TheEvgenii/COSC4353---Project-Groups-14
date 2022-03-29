@@ -36,6 +36,20 @@ app.post('/signup', async (req, res) => {
     }
 })
 
+//Profile Management
+app.post('/profile', async (req, res) => {
+    profile = req.body
+    // console.log(profile)
+    try {
+        // await client.query(`INSERT INTO PROFILES VALUES('${profile.username}','${profile.fullName}','${profile.address_1}','${profile.address_2}','${profile.city}','${profile.state}','${profile.zipcode}')`)
+        res.render('FuelQuoteHistory')
+    }
+    catch (e) {
+        console.log(e)
+    }
+
+})
+
 //Test function to show connection to database and retrieve data
 async function getUserName() {
     try {
@@ -50,6 +64,8 @@ async function getUserName() {
         console.log(e)
     }
 }
+
+
 
 
 // getUserName()
