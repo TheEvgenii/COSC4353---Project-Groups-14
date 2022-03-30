@@ -15,10 +15,20 @@ client.connect()
 
 //Get homepage
 app.get('/', (req, res) => {
-    res.render('index', { "errorMessage": "" })
+    res.render('index')
 })
 
-//Profile of username
+//Get signin page
+app.get('/signin', (req, res) => {
+    res.render('signin')
+})
+
+//Get signup page
+app.get('/signup', (req, res) => {
+    res.render('signup', { "errorMessage": "" })
+})
+
+//Profile of username request
 app.get('/profile/:username', (req, res) => {
     const { username } = req.params
     res.render('profile', { "username": username })
@@ -36,7 +46,7 @@ app.post('/signup', async (req, res) => {
     }
 })
 
-//Profile Management
+//Profile Management request
 app.post('/profile', async (req, res) => {
     profile = req.body
     // console.log(profile)
@@ -50,21 +60,24 @@ app.post('/profile', async (req, res) => {
 
 })
 
-//Test function to show connection to database and retrieve data
-async function getUserName() {
-    try {
-        let data = await client.query(`SELECT USERNAME FROM ACCOUNTS`)
-        let usernameList = []
-        for (user of data.rows) {
-            usernameList.push(user.username)
-        }
-        console.log(usernameList)
-    }
-    catch (e) {
-        console.log(e)
-    }
-}
 
+//Signin request
+app.post('/signin_request', async (req, res) => {
+    account = req.body
+    console.log(account)
+    // let usernameList = []
+    // try {
+    //     let data = await client.query(`SELECT USERNAME FROM ACCOUNTS`)
+
+    //     for (user of data.rows) {
+    //         usernameList.push(user.username)
+    //     }
+    // }
+    // catch (e) {
+    //     console.log(e)
+    // }
+
+})
 
 
 
