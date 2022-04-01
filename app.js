@@ -1,7 +1,7 @@
 const express = require("express");
 const { ClientRequest } = require("http");
 const path = require('path');
-const pg = require('pg')
+const pg = require('pg');
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'views')));
@@ -23,9 +23,19 @@ app.get('/signin', (req, res) => {
     res.render('signin')
 })
 
-//Get signup page
+//Get signup page of specific username
 app.get('/signup', (req, res) => {
     res.render('signup', { "errorMessage": "" })
+})
+
+//Get Fuel Quote page
+app.get('/fuelquote/:username', (req, res) => {
+    res.render('FuelQuote')
+})
+
+//Get Fuel Quote History page
+app.get('/fuelquotehistory', (req, res) => {
+    res.render('FuelQuoteHistory')
 })
 
 //Profile of username request
@@ -51,7 +61,7 @@ app.post('/profile', async (req, res) => {
     profile = req.body
     // console.log(profile)
     try {
-        // await client.query(`INSERT INTO PROFILES VALUES('${profile.username}','${profile.fullName}','${profile.address_1}','${profile.address_2}','${profile.city}','${profile.state}','${profile.zipcode}')`)
+        await client.query(`INSERT INTO PROFILES VALUES('${profile.username}','${profile.fullName}','${profile.address_1}','${profile.address_2}','${profile.city}','${profile.state}','${profile.zipcode}')`)
         res.render('FuelQuoteHistory')
     }
     catch (e) {
@@ -64,19 +74,30 @@ app.post('/profile', async (req, res) => {
 //Signin request
 app.post('/signin_request', async (req, res) => {
     account = req.body
-    console.log(account)
-    // let usernameList = []
-    // try {
-    //     let data = await client.query(`SELECT USERNAME FROM ACCOUNTS`)
+    let usernameList = []
+    try {
+        let data = await client.query(`SELECT USERNAME FROM ACCOUNTS`)
 
-    //     for (user of data.rows) {
-    //         usernameList.push(user.username)
-    //     }
-    // }
-    // catch (e) {
-    //     console.log(e)
-    // }
-
+        for (user of data.rows) {
+            usernameList.push(user.username)
+        }
+    }
+    catch (e) {
+        console.log(e)
+    }
+    for (username of usernameList) {
+        if (username == account.username) {
+            let password_data = await client.query(`SELECT PASSWORD FROM ACCOUNTS WHERE USERNAME='${account.username}'`)
+            let password = password_data.rows[0].password
+            if (password == account.password) {
+                console.log("Right!")
+                res.redirect(`/fuelquote/${account.username}`)
+            }
+            else {
+                console.log("Wrong")
+            }
+        }
+    }
 })
 
 
