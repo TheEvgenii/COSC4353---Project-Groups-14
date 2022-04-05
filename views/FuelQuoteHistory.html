@@ -14,6 +14,57 @@
     <script src = "FuelQuote.js"></script>
 </head>
 
+<style>
+    tr:nth-child(even){
+        background-color: #dddddd;
+    }
+</style>
+
+<script>
+    let sortDirection = false;
+    let customerData = [
+        {username: 'jose', gallons_requested: 10, date: 1/2/1, price: 34, gallons: 2},
+        {username: 'jose', gallons_requested: 10, date: 1/2/1, price: 34, gallons: 3}
+    ];
+
+    window.onload = () => {
+        loadTableData(customerData);
+    };
+
+
+    function loadTableData(customerData) {
+        const customerBody = document.getElementById('customerData');
+        let dataHtml = '';
+
+        for(let customer of customerData){
+            dataHtml += '<tr><td>${customer.username}</td><td>${customer.gallons_requested}</td><td>${customer.date}</td><td>${customer.price}</td><td>${customer.gallons}</td></tr>';
+            
+        }
+        console.log(dataHtml)
+        customerBody.innerHTML = dataHtml;
+    }
+
+    function sortColumn(columnName) {
+        const dataType = typeof customerData[0][columnName];
+        sortDirection = !sortDirection;
+
+        switch(dataType) {
+            case 'number':
+            sortNumberColumn(sortDirection, columnName);
+            break;
+        }
+
+        loadTableData(customerData);
+    }
+
+    function sortNumberColumn(sort, columnName) {
+        customerData = customerData.sort((p1, p2) => {
+            return sort ? p1[columnName] - p2[columnName] : p2[columnName] - p1[columnName]
+        });
+    }
+
+</script>
+
 <body>
     <header>
         <!-- Navbar -->
@@ -105,42 +156,14 @@
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Gallons Requested</th>
+                            <th scope="col">Username</th>
+                            <th scope="col" onclick="sortColumn('request')">Gallons Requested</th>
                             <th scope="col">Delivery Date</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Price per Gallon</th>
+                            <th scope="col" onclick="sortColumn('price')">Price</th>
+                            <th scope="col" onclick="sortColumn('gallon')">Price per Gallon</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">11/12/2021</th>
-                            <td>50</td>
-                            <td>11/15/2021</td>
-                            <td>$139.5</td>
-                            <td>$2.79</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">12/15/2021</th>
-                            <td>60</td>
-                            <td>12/20/2021</td>
-                            <td>$161.4</td>
-                            <td>$2.69</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">01/01/2022</th>
-                            <td>40</td>
-                            <td>01/12/2022</td>
-                            <td>$127.6</td>
-                            <td>$3.19</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">05/06/2023</th>
-                            <td>55</td>
-                            <td>05/10/2022</td>
-                            <td>$186.45</td>
-                            <td>$3.39</td>
-                        </tr>
+                    <tbody id="customerData">
                     </tbody>
                 </table>
             </div>
