@@ -1,6 +1,3 @@
-var getUserName = require('./app.js')
-
-
 
 function validate_signup(event) {
     var username = document.getElementById("username");

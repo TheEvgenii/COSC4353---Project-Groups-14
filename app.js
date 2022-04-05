@@ -1,7 +1,8 @@
+
 const express = require("express");
 const { ClientRequest } = require("http");
 const path = require('path');
-const pg = require('pg')
+const pg = require('pg');
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'views')));
@@ -20,12 +21,22 @@ app.get('/', (req, res) => {
 
 //Get signin page
 app.get('/signin', (req, res) => {
-    res.render('signin')
+    res.render('signin', { "error": "" })
 })
 
-//Get signup page
+//Get signup page of specific username
 app.get('/signup', (req, res) => {
     res.render('signup', { "errorMessage": "" })
+})
+
+//Get Fuel Quote page
+app.get('/fuelquote/:username', (req, res) => {
+    res.render('FuelQuote')
+})
+
+//Get Fuel Quote History page
+app.get('/fuelquotehistory', (req, res) => {
+    res.render('FuelQuoteHistory')
 })
 
 //Profile of username request
@@ -36,9 +47,10 @@ app.get('/profile/:username', (req, res) => {
 
 //Signup request
 app.post('/signup', async (req, res) => {
-    account = req.body
+    let account = req.body
+    let password = encryption(account.password)
     try {
-        await client.query(`INSERT INTO ACCOUNTS VALUES('${account.username}','${account.password}','${account.email}')`)
+        await client.query(`INSERT INTO ACCOUNTS VALUES('${account.username}','${password}','${account.email}')`)
         res.redirect(`/profile/${account.username}`)
     }
     catch (e) {
@@ -48,11 +60,11 @@ app.post('/signup', async (req, res) => {
 
 //Profile Management request
 app.post('/profile', async (req, res) => {
-    profile = req.body
+    let profile = req.body
     // console.log(profile)
     try {
-        // await client.query(`INSERT INTO PROFILES VALUES('${profile.username}','${profile.fullName}','${profile.address_1}','${profile.address_2}','${profile.city}','${profile.state}','${profile.zipcode}')`)
-        res.render('FuelQuoteHistory')
+        await client.query(`INSERT INTO PROFILES VALUES('${profile.username}','${profile.fullName}','${profile.address_1}','${profile.address_2}','${profile.city}','${profile.state}','${profile.zipcode}')`)
+        res.redirect(`/fuelquote/${profile.username}`)
     }
     catch (e) {
         console.log(e)
@@ -63,31 +75,96 @@ app.post('/profile', async (req, res) => {
 
 //Signin request
 app.post('/signin_request', async (req, res) => {
-    account = req.body
-    console.log(account)
-    // let usernameList = []
-    // try {
-    //     let data = await client.query(`SELECT USERNAME FROM ACCOUNTS`)
+    let account = req.body
+    let usernameList = []
+    try {
+        let data = await client.query(`SELECT USERNAME FROM ACCOUNTS`)
 
-    //     for (user of data.rows) {
-    //         usernameList.push(user.username)
-    //     }
-    // }
-    // catch (e) {
-    //     console.log(e)
-    // }
-
+        for (user of data.rows) {
+            usernameList.push(user.username)
+        }
+    }
+    catch (e) {
+        console.log(e)
+    }
+    for (username of usernameList) {
+        if (username == account.username) {
+            let password_data = await client.query(`SELECT PASSWORD FROM ACCOUNTS WHERE USERNAME='${account.username}'`)
+            if (password_data.rows[0].password == encryption(account.password)) {
+                res.redirect(`/fuelquote/${username}`)
+            }
+            else {
+                res.render('signin', { "error": "Username or password is not correct!" })
+            }
+        }
+    }
+    res.render('signin', { "error": "Username or password is not correct!" })
 })
 
 
+//Helper functions to encrypt or decrypt
+function findKeyStream(plain_text, key) {
+    let key_size = key.length;
+    // console.log(key_size)
+    let S = []
+    let K = []
+    for (let i = 0; i < 256; i++) {
+        S.push(i)
+    }
+    for (let i = 0; i < 256; i++) {
+        let j = i % key_size
+        K.push(key.charCodeAt(j))
+    }
 
-// getUserName()
+    let j = 0
+    for (let i = 0; i < 256; i++) {
+        j = (j + S[i] + K[i]) % 256
+        let temp = S[i]
+        S[i] = S[j]
+        S[j] = temp
+    }
 
+    let text_size = plain_text.length;
+    let index
+    let t
+    let keyStream = []
+    for (let i = 0; i < text_size; i++) {
+        index = i
+        index = (index + 1) % 256
+        j = (j + S[index]) % 256
+        let temp = S[index]
+        S[index] = S[j]
+        S[j] = temp
+        t = (S[index] + S[j]) % 256
+        keyStream.push(S[t])
+    }
+    return keyStream
+}
+function encryption(password) {
+    let key = "project"
+    let keyStream = findKeyStream(password, key)
+    let encode = ""
 
-// module.exports = getUserName()
+    for (let i = 0; i < password.length; i++) {
+        encode += (keyStream[i] ^ password.charCodeAt(i)).toString(16)
+        encode += " "
+    }
+    return encode
+}
 
+function decryption(password) {
+    let key = "project"
+    password = encryption("Hello World!")
+    let keyStream = findKeyStream(password, key)
+    str_list = password.split(" ")
+    str_list.splice(-1, 1)
+    let plain_text = ""
 
-
+    for (let i = 0; i < str_list.length; i++) {
+        plain_text = plain_text + String.fromCharCode(parseInt(str_list[i], 16) ^ keyStream[i])
+    }
+    return plain_text
+}
 
 
 
