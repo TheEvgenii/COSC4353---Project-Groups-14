@@ -15,17 +15,31 @@
 
 <body>
     <header>
-        <nav class="navbar py-1 bg-warning fixed-top border-bottom">
+        <nav class="navbar py-4 bg-warning fixed-top border-bottom">
             <div class="container mx-5">
-                <a href="/" class="navbar-brand text-dark">
-                    <div class="row">
-                        <h1>Fuel Resource</h1>
-                    </div>
+                <a href="/" class="navbar-brand">
+                    <h3 class="text-dark">Fuel Resource</h3>
                 </a>
-                <a class="btn btn-outline-dark mb-3 nav-item" href="/signin">Log In</a>
+                <ul class="d-flex flex-row navbar-nav">
+                    <div class="row">
+                        <div class="col-md">
+                            <li class="h4 "><a class="nav-link text-dark" href="/">Home</a></li>
+                        </div>
+                        <div class="col-md">
+                            <li class="h4"><a class="nav-link text-dark" href="/signin">Login</a></li>
+                        </div>
+                        <div class="col-md">
+                            <li class="h4"><a class="nav-link text-dark" href="/signup">Register</a></li>
+                        </div>
+                    </div>
+                </ul>
+
+
             </div>
+
         </nav>
     </header>
+
 
     <main class="container firstDiv">
         <div class="container box">

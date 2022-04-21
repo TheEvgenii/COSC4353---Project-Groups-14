@@ -14,14 +14,30 @@
 
 <body>
     <header>
-        <nav class="navbar py-1 bg-warning fixed-top border-bottom">
-            <div class="container mx-5">
-                <a href="/" class="navbar-brand text-dark">
-                    <div class="row">
-                        <h1>Fuel Resource</h1>
-                    </div>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg bg-warning navbar-light py-1 fixed-top">
+            <div class="container">
+                <a href="/" class="navbar-brand">
+                    <img src="fuelResourceLogo.png" class="logo">
                 </a>
-                <a class="btn btn-outline-dark mb-3 nav-item" href="/signin">Log In</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navmenu">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark h4" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark h4" href="/signup">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark h4" href="/signin">Login</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
@@ -52,15 +68,23 @@
                     </h3>
                     <% } %>
                         <div class="d-flex justify-content-center my-3">
-                            <button class="btn btn-outline-warning" type="submit">Create Account</button>
+                            <button class="btn btn-lg fw-bold btn-warning" type="submit">Create
+                                Account</button>
                         </div>
                         <div class="text-center">
-                            Already a member? <a class="link-warning" href="/signin">Log in</a>
+                            Already a member? <a class="link-warning fw-bold" href="/signin">Log in</a>
                         </div>
             </form>
 
         </div>
+
     </main>
+
+    <section class="footer">
+        <p>Contact us: fuel.resource@gmail.com</p>
+        <p>Copyright ©  2022 Fuel Resource America, Inc.</p>
+    </section>
+
 
 
 

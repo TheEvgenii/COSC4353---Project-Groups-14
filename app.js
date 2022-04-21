@@ -1,4 +1,3 @@
-
 const express = require("express");
 const { ClientRequest } = require("http");
 const path = require('path');
@@ -31,11 +30,16 @@ app.get('/signup', (req, res) => {
 
 //Get Fuel Quote page
 app.get('/fuelquote/:username', (req, res) => {
-    res.render('FuelQuote')
+    const { username } = req.params
+    res.render('FuelQuote', { "username": username })
 })
 
+app.get('fuelquote', (req, res) => {
+    res.render('FuelQuote')
+})
 //Get Fuel Quote History page
-app.get('/fuelquotehistory', (req, res) => {
+app.get('/history/:username', (req, res) => {
+    const { username } = req.params
     res.render('FuelQuoteHistory')
 })
 
@@ -83,22 +87,24 @@ app.post('/signin_request', async (req, res) => {
         for (user of data.rows) {
             usernameList.push(user.username)
         }
+        for (username of usernameList) {
+            if (username == account.username) {
+                let password_data = await client.query(`SELECT PASSWORD FROM ACCOUNTS WHERE USERNAME='${account.username}'`)
+                if (password_data.rows[0].password == encryption(account.password)) {
+                    res.redirect(`/fuelquote/${username}`)
+                }
+                else {
+                    res.render('signin', { "error": "Username or password is not correct!" })
+                }
+                break
+            }
+        }
+        res.render('signin', { "error": "Username or password is not correct!" })
     }
     catch (e) {
         console.log(e)
     }
-    for (username of usernameList) {
-        if (username == account.username) {
-            let password_data = await client.query(`SELECT PASSWORD FROM ACCOUNTS WHERE USERNAME='${account.username}'`)
-            if (password_data.rows[0].password == encryption(account.password)) {
-                res.redirect(`/fuelquote/${username}`)
-            }
-            else {
-                res.render('signin', { "error": "Username or password is not correct!" })
-            }
-        }
-    }
-    res.render('signin', { "error": "Username or password is not correct!" })
+
 })
 
 
@@ -166,7 +172,34 @@ function decryption(password) {
     return plain_text
 }
 
+app.post('/checkPrice', async (req, res) => {
+    let info = req.body
+    let gallnum = info.gallonsRequested
+    let state = info.State
+    let galprice = 1.50;
+    let locfactor = 0.04;
+    var hisfactor, gallnumTax, cumprofit, totalprice;
+    // gallnum = Number(document.price.gallonsRequested.value);
 
+
+    if (state == 'Texas') {
+        locfactor = 0.02;
+    }
+    hisfactor = 0;
+    //if (has history) {
+    //  hisfactor = 1;
+    // }
+    gallnumTax = 0.02;
+    if (gallnum > 1000) {
+        gallnumTax = 0.03;
+    }
+    cumprofit = 0.1;
+    let pricePerGallon = ((locfactor - hisfactor + gallnumTax + cumprofit) * galprice) + galprice;
+    // totalprice = gallnum * sugestedprice;
+    // document.price.totalprice.value = totalprice;
+    console.log(info)
+    res.redirect(`/fuelquote/${info.username}`)
+})
 
 app.listen(3000, (req, res) => {
     console.log("Listening on port 3000!")

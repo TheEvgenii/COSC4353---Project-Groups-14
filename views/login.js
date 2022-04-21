@@ -1,8 +1,5 @@
-
-
 let form = document.getElementById("form")
 form.addEventListener("submit", validate)
-
 
 function validate(event) {
     var username = document.getElementById("username");
