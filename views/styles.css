@@ -73,25 +73,8 @@ body {
     background-color: #ffdddd;
 }
 
-<<<<<<< HEAD
 .logo {
     width: 120px;
     cursor: pointer;
     padding-top: 1%;
-=======
-.footer {
-    width: 100%;
-    min-height: 100px;
-    padding: 20px 70px;
-    margin: 0;
-    background: #484872;
-    text-align: center;
-
-}
-
-.footer p {
-    color: whitesmoke;
-    margin: 20px auto;
-    padding: 20px auto;
->>>>>>> 27ea4342d1bacd90c45d7da5f0533b206b12f92a
 }

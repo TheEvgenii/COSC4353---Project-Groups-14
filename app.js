@@ -34,8 +34,20 @@ app.get('/fuelquote/:username', (req, res) => {
     res.render('FuelQuote', { "username": username })
 })
 
-app.get('fuelquote', (req, res) => {
-    res.render('FuelQuote')
+app.get('/fuelquote/:username/:gallon/:state/:price', async (req, res) => {
+    const username = req.params.username
+    const gallon = req.params.gallon
+    const state = req.params.state
+    const price = req.params.price
+    try {
+        let data = await client.query(`SELECT address1,city,state from profiles where username='${username}'`)
+        let address = data.rows[0].address1 + ", " + data.rows[0].city + ", " + data.rows[0].state
+        res.render('FuelQuote', { "username": username, "gallon": gallon, "state": state, "price": price, "address": address })
+    }
+    catch (e) {
+        console.log(e)
+    }
+
 })
 //Get Fuel Quote History page
 app.get('/history/:username', (req, res) => {
@@ -172,33 +184,49 @@ function decryption(password) {
     return plain_text
 }
 
-app.post('/checkPrice', async (req, res) => {
-    let info = req.body
-    let gallnum = info.gallonsRequested
-    let state = info.State
-    let galprice = 1.50;
-    let locfactor = 0.04;
-    var hisfactor, gallnumTax, cumprofit, totalprice;
-    // gallnum = Number(document.price.gallonsRequested.value);
+app.get('/checkPrice', async (req, res) => {
+    try {
+        let gallon = req.query.gallon
+        let state = req.query.state
+        let pricePerGallon = 1.50;
+        let locfactor = 0.04;
+        var hisfactor, gallnumTax, cumprofit, totalprice;
+        // gallnum = Number(document.price.gallonsRequested.value);
 
 
-    if (state == 'Texas') {
-        locfactor = 0.02;
+        if (state == 'Texas') {
+            locfactor = 0.02;
+        }
+        hisfactor = 0
+        let data = await client.query(`SELECT COUNT(*) FROM HISTORY WHERE USERNAME='${req.query.username}'`)
+        if (data.rows[0].count > 0) {
+            hisfactor = 0.01
+        }
+
+        gallnumTax = 0.02;
+        if (gallon > 1000) {
+            gallnumTax = 0.03;
+        }
+        cumprofit = 0.1;
+        let suggestPricePerGallon = ((locfactor - hisfactor + gallnumTax + cumprofit) * pricePerGallon) + pricePerGallon;
+        res.redirect(`/fuelquote/${req.query.username}/${gallon}/${state}/${suggestPricePerGallon}`)
     }
-    hisfactor = 0;
-    //if (has history) {
-    //  hisfactor = 1;
-    // }
-    gallnumTax = 0.02;
-    if (gallnum > 1000) {
-        gallnumTax = 0.03;
+    catch (e) {
+        console.log(e)
     }
-    cumprofit = 0.1;
-    let pricePerGallon = ((locfactor - hisfactor + gallnumTax + cumprofit) * galprice) + galprice;
-    // totalprice = gallnum * sugestedprice;
-    // document.price.totalprice.value = totalprice;
-    console.log(info)
-    res.redirect(`/fuelquote/${info.username}`)
+
+})
+
+app.post('/placeOrder', async (req, res) => {
+    let data = req.body
+    let date = req.body.Month + " " + req.body.Day + ", " + req.body.Year
+    try {
+        await client.query(`INSERT INTO HISTORY VALUES ('${req.body.username}','${req.body.gallon}','${date}','${req.body.totalPrice}','${req.body.pricePerGallon}')`)
+        res.redirect(`/history/${req.body.username}`)
+    }
+    catch (e) {
+        console.log(e)
+    }
 })
 
 app.listen(3000, (req, res) => {

@@ -1,3 +1,32 @@
+let button = document.getElementById("calculate")
+button.addEventListener("click", sumValues)
+
+
+function sumValues() {
+  console.log("asdas")
+  // var galprice, locfactor, hisfactor, gallnum, gallnumTax, cumprofit, totalprice;
+  // gallnum = Number(document.price.gallonsRequested.value);
+  // galprice = 1.50;
+  // locfactor = 0.04;
+  // if (document.price.State.value == 'Texas') {
+  //   locfactor = 0.02;
+  // }
+  // hisfactor = 0;
+  // //if (has history) {
+  // //  hisfactor = 1;
+  // // }
+  // gallnumTax = 0.02;
+  // if (gallnum > 1000) {
+  //   gallnumTax = 0.03;
+  // }
+  // cumprofit = 0.1;
+  // sugestedprice = ((locfactor - hisfactor + gallnumTax + cumprofit) * galprice) + galprice;
+  // totalprice = gallnum * sugestedprice;
+  // document.price.show.innerHTML = sugestedprice;
+  // console.log(sugestedprice)
+}
+
+
 function save() {
   var new_data =
     " Gallons Requested: " + document.getElementById("inputGallon").value;
