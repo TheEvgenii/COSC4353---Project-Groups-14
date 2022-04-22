@@ -8,6 +8,7 @@
     padding: 30px;
     border-radius: 10px;
     background-color: rgba(253, 255, 218, 0.178);
+    
 }
 
 .sign-up {
@@ -51,3 +52,20 @@ body {
     cursor: pointer;
     padding-top: 1%;
 }
+
+.footer {
+    width: 100%;
+    min-height: 100px;
+    padding: 20px 80px;
+    margin: 0;
+    background: #484872;
+    text-align: center;
+
+}
+
+.footer p {
+    color: whitesmoke;
+    margin: 20px auto;
+    padding: 20px auto;
+}
+

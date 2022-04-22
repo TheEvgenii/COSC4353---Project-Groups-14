@@ -78,3 +78,29 @@ body {
     cursor: pointer;
     padding-top: 1%;
 }
+
+
+.footer p {
+    color: whitesmoke;
+    margin: 20px auto;
+    padding: 20px auto;
+}
+
+.footer {
+    width: 100%;
+    min-height: 100px;
+    padding: 20px 80px;
+    margin: 0;
+    background: #484872;
+    text-align: center;
+
+}
+
+/* Mobile device */
+
+@media only screen and (max-width:850px){
+.footer {
+    padding: 10px;
+
+}
+}

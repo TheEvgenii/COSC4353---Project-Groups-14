@@ -2,6 +2,22 @@
   margin-top: 150px;
 }
 
+.footer p {
+  color: whitesmoke;
+  margin: 20px auto;
+  padding: 20px auto;
+}
+
+.footer {
+  width: 100%;
+  min-height: 100px;
+  padding: 20px 80px;
+  margin: 0;
+  background: #484872;
+  text-align: center;
+
+}
+
 
 /* nav {
   background: #e9a21f;

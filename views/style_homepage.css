@@ -2,18 +2,6 @@
     margin-top: 120px;
 }
 
-.container1 {
-    height: 100vh;
-    width: 100%;
-    background-image: url(drilling.png);
-    background-position: center;
-    background-size: cover;
-    padding-left: 5%;
-    padding-right: 5%;
-    box-sizing: border-box;
-    position: relative;
-}
-
 .navbar1 {
     width: 105%;
     height: 15vh;
@@ -59,11 +47,6 @@ nav ul li a {
 
 }
 
-.content p {
-    font-size: 20px;
-    color: #ffc106;
-    ;
-}
 
 .content {
     margin-left: 8%;
@@ -71,7 +54,8 @@ nav ul li a {
 
 }
 
-.container1 .btn {
+
+.content-col .btn {
     display: inline-block;
     background: linear-gradient(45deg, #CAB9FF, #FFBCA6);
     border-radius: 60px;
@@ -83,8 +67,76 @@ nav ul li a {
 
 }
 
+.line{
+    width: 150px;
+    height: 4px;
+    background: #484872;
+    margin: 10px auto;
+    border-radius: 5px;
+}
+
+
+section{
+    width: 80%;
+    margin: 20px auto;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.content-col {
+    width: 40%;
+}
+
+.image-col{
+    width: 60%;
+}
+
+.tours .image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+}
+
+.image-gallery img {
+    max-width: 2400px;
+    margin: 20px;
+}
+
+.content-col h1 {
+    font-size:  7vmin;
+    color: #008822;
+}
+
+
+.content-col .line {
+    margin-left: -1px;;
+}
+
+.content-col p {
+    padding: 0;
+    margin: 30px auto; 
+}
+
+.content-col .ctn {
+    margin-left: -100px;
+}
+
+
+
+.footer p {
+    color: whitesmoke;
+    margin: 20px auto;
+    padding: 20px auto;
+}
+
 .footer {
-    width: 90%;
+    width: 100%;
     min-height: 100px;
     padding: 20px 80px;
     margin: 0;
@@ -93,8 +145,75 @@ nav ul li a {
 
 }
 
-.footer p {
-    color: whitesmoke;
-    margin: 20px auto;
-    padding: 20px auto;
+
+body , html {
+    overflow-x: hidden;
+    background-color: #d2f8d227;
+    
+} 
+
+
+
+/* Mobile device */
+
+@media only screen and (max-width:850px){
+  
+
+    .logo{
+        position: absolute;
+        top: 30px;
+        left: 30px;
+    }
+
+    .row {
+        flex-direction: column;
+    }
+
+    .row .col {
+        margin: 20px auto;
+    }
+
+
+    .content {
+        width: 50%;
+
+    }
+
+    .image-gallery {
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .image-gallery img {
+        width:  100%;
+    }
+
+    .footer {
+        padding: 10px;
+
+    }
+
+
+}
+
+
+
+/* Animation */
+
+img {
+    transition: transform .3s ease;
+}
+
+img:hover {
+    transform: scale(1.1);
+}
+
+
+.btn:hover{
+    background: linear-gradient(45deg,#FFBCA6, #CAB9FF);
+
+    color: rgb(255, 255, 255);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.421);
+
 }
