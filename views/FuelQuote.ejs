@@ -310,16 +310,19 @@
                 <option value="2023">2023</option>
               </select>
             </div>
-            <div style="display: none">
-              <input type="text" name="gallon" value="<%=gallon%>">
-              <input type="text" name="pricePerGallon" value="<%=price%>">
-              <input type="text" name="totalPrice" value="<%=price*gallon%>">
-              <input type="text" name="username" value="<%=username%>">
+            <%if (locals.gallon){%>
+              <div style="display: none">
+                <input type="text" name="gallon" value="<%=gallon%>">
+                <input type="text" name="pricePerGallon" value="<%=price%>">
+                <input type="text" name="totalPrice" value="<%=price*gallon%>">
+                <input type="text" name="username" value="<%=username%>">
 
-            </div>
-            <div class="text-center">
-              <button type="submit" class="btn btn-danger fw-bold">Place order!</button>
-            </div>
+              </div>
+              <%}%>
+
+                <div class="text-center">
+                  <button type="submit" class="btn btn-danger fw-bold">Place order!</button>
+                </div>
         </form>
 
 
