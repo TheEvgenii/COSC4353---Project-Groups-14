@@ -11,7 +11,7 @@
   <title>Fuel Quote</title>
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
 
   <header>
     <!-- Navbar -->
@@ -34,7 +34,13 @@
               <a class="nav-link text-dark h4" href="/">Home</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link text-dark h4" href="/modifyProfile/<%=username%>">Profile</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link text-dark h4" href="/history/<%=username%>">History</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark h4" href="/fuelquote/<%=username%>">Get Quote</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-danger h4" href="/signin">Log Out</a>
@@ -44,313 +50,349 @@
       </div>
     </nav>
   </header>
+  <main class="flex-shrink-0">
+    <div style="margin-top: 250px;" class="container">
+      <div class="row">
+        <div style="border-right: 1px black solid ;" class="col-md-4 px-5">
+          <form method="GET" action="/checkPrice">
+            <div class="text-success h1">Checking price</div>
+            <div class="form-group mt-3">
 
-  <div style="margin-top: 250px;" class="container">
-    <div class="row">
-      <div style="border-right: 1px black solid ;" class="col-md-4 px-5">
-        <form method="GET" action="/checkPrice">
-          <div class="text-success h1">Checking price</div>
-          <div class="form-group mt-3">
-
-            <label for="gallon">Number of gallon</label>
-            <%if(locals.gallon){%>
-              <input type="number" class="form-control" name="gallon" id="gallon" aria-describedby="gallonHelp"
-                value="<%=gallon%>%>" placeholder="Enter number of gallon that you want to buy!">
-              <%}%>
-                <%if (!locals.gallon){%>
-                  <input type="number" class="form-control" name="gallon" id="gallon" aria-describedby="gallonHelp"
-                    placeholder="Enter number of gallon that you want to buy!">
-                  <%}%>
-                    <small id="gallonHelp" class="form-text text-muted">This infomation helps us calculate your total
-                      cost.</small>
-          </div>
-
-          <div class="form-group my-4">
-            <label for="state">State</label>
-            <%if(locals.state){%>
-              <select id="state" class="form-control form-control-lg" name="state">
-                <option value="<%=state%>">
-                  <%=state%>
-                </option>
-                <option value="Alabama">AL</option>
-                <option value="Alaska">AK</option>
-                <option value="American Samoa">AS</option>
-                <option value="Arizona">AZ</option>
-                <option value="Arkansas">AR</option>
-                <option value="California">CA</option>
-                <option value="Colorado">CO</option>
-                <option value="Connecticut">CT</option>
-                <option value="Delaware">DE</option>
-                <option value="District Of Columbia">DC</option>
-                <option value="Federated States Of Micronesia">FM</option>
-                <option value="Florida">FL</option>
-                <option value="Georgia">GA</option>
-                <option value="Guam">GU</option>
-                <option value="Hawaii">HI</option>
-                <option value="Idaho">ID</option>
-                <option value="Illinois">IL</option>
-                <option value="Indiana">IN</option>
-                <option value="Iowa">IA</option>
-                <option value="Kansas">KS</option>
-                <option value="Kentucky">KY</option>
-                <option value="Louisiana">LA</option>
-                <option value="Maine">ME</option>
-                <option value="Marshall Islands">MH</option>
-                <option value="Maryland">MD</option>
-                <option value="Massachusetts">MA</option>
-                <option value="Michigan">MI</option>
-                <option value="Minnesota">MN</option>
-                <option value="Mississippi">MS</option>
-                <option value="Missouri">MO</option>
-                <option value="Montana">MT</option>
-                <option value="Nebraska">NE</option>
-                <option value="Nevada">NV</option>
-                <option value="New Hampshire">NH</option>
-                <option value="New Jersey">NJ</option>
-                <option value="New Mexico">NM</option>
-                <option value="New York">NY</option>
-                <option value="North Carolina">NC</option>
-                <option value="North Dakota">ND</option>
-                <option value="Northern Mariana Islands">MP</option>
-                <option value="Ohio">OH</option>
-                <option value="Oklahoma">OK</option>
-                <option value="Oregon">OR</option>
-                <option value="Palau">PW</option>
-                <option value="Pennsylvania">PA</option>
-                <option value="Puerto Rico">PR</option>
-                <option value="Rhode Island">RI</option>
-                <option value="South Carolina">SC</option>
-                <option value="South Dakota">SD</option>
-                <option value="Tennessee">TN</option>
-                <option value="Texas">TX</option>
-                <option value="Utah">UT</option>
-                <option value="Vermont">VT</option>
-                <option value="Virgin Islands">VI</option>
-                <option value="Virginia">VA</option>
-                <option value="Washington">WA</option>
-                <option value="West Virginia">WV</option>
-                <option value="Wisconsin">WI</option>
-                <option value="Wyoming">WY</option>
-              </select>
-              <%}%>
-                <%if(!locals.state){%>
-                  <select class="form-control" name="state">
-                    <option value=""></option>
-                    <option value="Alabama">AL</option>
-                    <option value="Alaska">AK</option>
-                    <option value="American Samoa">AS</option>
-                    <option value="Arizona">AZ</option>
-                    <option value="Arkansas">AR</option>
-                    <option value="California">CA</option>
-                    <option value="Colorado">CO</option>
-                    <option value="Connecticut">CT</option>
-                    <option value="Delaware">DE</option>
-                    <option value="District Of Columbia">DC</option>
-                    <option value="Federated States Of Micronesia">FM</option>
-                    <option value="Florida">FL</option>
-                    <option value="Georgia">GA</option>
-                    <option value="Guam">GU</option>
-                    <option value="Hawaii">HI</option>
-                    <option value="Idaho">ID</option>
-                    <option value="Illinois">IL</option>
-                    <option value="Indiana">IN</option>
-                    <option value="Iowa">IA</option>
-                    <option value="Kansas">KS</option>
-                    <option value="Kentucky">KY</option>
-                    <option value="Louisiana">LA</option>
-                    <option value="Maine">ME</option>
-                    <option value="Marshall Islands">MH</option>
-                    <option value="Maryland">MD</option>
-                    <option value="Massachusetts">MA</option>
-                    <option value="Michigan">MI</option>
-                    <option value="Minnesota">MN</option>
-                    <option value="Mississippi">MS</option>
-                    <option value="Missouri">MO</option>
-                    <option value="Montana">MT</option>
-                    <option value="Nebraska">NE</option>
-                    <option value="Nevada">NV</option>
-                    <option value="New Hampshire">NH</option>
-                    <option value="New Jersey">NJ</option>
-                    <option value="New Mexico">NM</option>
-                    <option value="New York">NY</option>
-                    <option value="North Carolina">NC</option>
-                    <option value="North Dakota">ND</option>
-                    <option value="Northern Mariana Islands">MP</option>
-                    <option value="Ohio">OH</option>
-                    <option value="Oklahoma">OK</option>
-                    <option value="Oregon">OR</option>
-                    <option value="Palau">PW</option>
-                    <option value="Pennsylvania">PA</option>
-                    <option value="Puerto Rico">PR</option>
-                    <option value="Rhode Island">RI</option>
-                    <option value="South Carolina">SC</option>
-                    <option value="South Dakota">SD</option>
-                    <option value="Tennessee">TN</option>
-                    <option value="Texas" selected>TX</option>
-                    <option value="Utah">UT</option>
-                    <option value="Vermont">VT</option>
-                    <option value="Virgin Islands">VI</option>
-                    <option value="Virginia">VA</option>
-                    <option value="Washington">WA</option>
-                    <option value="West Virginia">WV</option>
-                    <option value="Wisconsin">WI</option>
-                    <option value="Wyoming">WY</option>
-                  </select>
-                  <%}%>
-                    <small id="stateHelp" class="form-text text-muted">To calculate the taxes.</small>
-          </div>
-          <div class="text-center">
-            <input type="text" id="username" name="username" value="<%=username%>" hidden>
-            <button class="btn btn-success fw-bold" type="submit">Check Price</button>
-            <a class="btn btn-warning fw-bold" href="/history/<%=username%>">View History</a>
-          </div>
-
-        </form>
-
-      </div>
-
-
-
-      <div class="col-md-8 px-5">
-
-        <div class="h4 text-secondary">
-          <%if (locals.price){%>
-            Your total cost is: <span class=" h2 text-danger">$<%=price*gallon%>
-
-            </span> or <span class=" h2 text-danger">$<%=price%>
-                /gallon</span>
-            <%}if (!locals.price){%>
-              Your total cost is: <span class=" h2 text-danger">$___</span> or <span
-                class=" h2 text-danger">$___/gallon</span>
-              <%}%>
-        </div>
-        <div class="text-secondary">
-          If you're fine with the price, go ahead and fill the information below to proceed to order!
-        </div>
-        <form method="POST" action="/placeOrder">
-          <div class="form-group my-3">
-            <label for="address">Address for delivery</label>
-            <%if (locals.address){%>
-              <input type="text" class="form-control" name="address" id="address" aria-describedby="addressHelp"
-                required value="<%=address%>">
-              <%} if(!locals.address){%>
-                <input type="text" class="form-control" name="address" id="address" aria-describedby="addressHelp"
-                  required placeholder="Address">
+              <label for="gallon">Number of gallon</label>
+              <%if(locals.gallon){%>
+                <input type="number" class="form-control" name="gallon" id="gallon" aria-describedby="gallonHelp"
+                  value="<%=gallon%>%>" placeholder="Enter number of gallon that you want to buy!"
+                  onkeyup="manage(this)">
                 <%}%>
-
-
-                  <small id="addressHelp" class="form-text text-muted">This is your address in your profile. Modify it
-                    if
-                    you
-                    want us to deliver to other address.</small>
-          </div>
-
-          <div>
-            <label for="">Date to deliver</label>
-          </div>
-          <div class="row my-3">
-            <div class="col-md">
-              <select class="form-control" name="Month" required aria-describedby="monthHelp">
-                <option value="">Month</option>
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-              </select>
-              <small id="monthHelp" class="form-text text-muted">Please allow +-1 day to deliver!</small>
+                  <%if (!locals.gallon){%>
+                    <input type=" number" class="form-control" name="gallon" id="gallon" aria-describedby="gallonHelp"
+                      placeholder="Enter number of gallon that you want to buy!" onkeyup="manage(this)">
+                    <%}%>
+                      <small id=" gallonHelp" class="form-text text-muted">This infomation helps us calculate your
+                        total
+                        cost.</small>
             </div>
 
-            <div class="col-md">
-              <select class="form-control" name="Day" required>
-                <option value="">Day</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-              </select>
+            <div class="form-group my-4">
+              <label for="state">State</label>
+              <%if(locals.state){%>
+                <select id="state" class="form-control form-control-lg" name="state">
+                  <option value="<%=state%>">
+                    <%=state%>
+                  </option>
+                  <option value="Alabama">AL</option>
+                  <option value="Alaska">AK</option>
+                  <option value="American Samoa">AS</option>
+                  <option value="Arizona">AZ</option>
+                  <option value="Arkansas">AR</option>
+                  <option value="California">CA</option>
+                  <option value="Colorado">CO</option>
+                  <option value="Connecticut">CT</option>
+                  <option value="Delaware">DE</option>
+                  <option value="District Of Columbia">DC</option>
+                  <option value="Federated States Of Micronesia">FM</option>
+                  <option value="Florida">FL</option>
+                  <option value="Georgia">GA</option>
+                  <option value="Guam">GU</option>
+                  <option value="Hawaii">HI</option>
+                  <option value="Idaho">ID</option>
+                  <option value="Illinois">IL</option>
+                  <option value="Indiana">IN</option>
+                  <option value="Iowa">IA</option>
+                  <option value="Kansas">KS</option>
+                  <option value="Kentucky">KY</option>
+                  <option value="Louisiana">LA</option>
+                  <option value="Maine">ME</option>
+                  <option value="Marshall Islands">MH</option>
+                  <option value="Maryland">MD</option>
+                  <option value="Massachusetts">MA</option>
+                  <option value="Michigan">MI</option>
+                  <option value="Minnesota">MN</option>
+                  <option value="Mississippi">MS</option>
+                  <option value="Missouri">MO</option>
+                  <option value="Montana">MT</option>
+                  <option value="Nebraska">NE</option>
+                  <option value="Nevada">NV</option>
+                  <option value="New Hampshire">NH</option>
+                  <option value="New Jersey">NJ</option>
+                  <option value="New Mexico">NM</option>
+                  <option value="New York">NY</option>
+                  <option value="North Carolina">NC</option>
+                  <option value="North Dakota">ND</option>
+                  <option value="Northern Mariana Islands">MP</option>
+                  <option value="Ohio">OH</option>
+                  <option value="Oklahoma">OK</option>
+                  <option value="Oregon">OR</option>
+                  <option value="Palau">PW</option>
+                  <option value="Pennsylvania">PA</option>
+                  <option value="Puerto Rico">PR</option>
+                  <option value="Rhode Island">RI</option>
+                  <option value="South Carolina">SC</option>
+                  <option value="South Dakota">SD</option>
+                  <option value="Tennessee">TN</option>
+                  <option value="Texas">TX</option>
+                  <option value="Utah">UT</option>
+                  <option value="Vermont">VT</option>
+                  <option value="Virgin Islands">VI</option>
+                  <option value="Virginia">VA</option>
+                  <option value="Washington">WA</option>
+                  <option value="West Virginia">WV</option>
+                  <option value="Wisconsin">WI</option>
+                  <option value="Wyoming">WY</option>
+                </select>
+                <%}%>
+                  <%if(!locals.state){%>
+                    <select class="form-control" name="state">
+                      <option value=""></option>
+                      <option value="Alabama">AL</option>
+                      <option value="Alaska">AK</option>
+                      <option value="American Samoa">AS</option>
+                      <option value="Arizona">AZ</option>
+                      <option value="Arkansas">AR</option>
+                      <option value="California">CA</option>
+                      <option value="Colorado">CO</option>
+                      <option value="Connecticut">CT</option>
+                      <option value="Delaware">DE</option>
+                      <option value="District Of Columbia">DC</option>
+                      <option value="Federated States Of Micronesia">FM</option>
+                      <option value="Florida">FL</option>
+                      <option value="Georgia">GA</option>
+                      <option value="Guam">GU</option>
+                      <option value="Hawaii">HI</option>
+                      <option value="Idaho">ID</option>
+                      <option value="Illinois">IL</option>
+                      <option value="Indiana">IN</option>
+                      <option value="Iowa">IA</option>
+                      <option value="Kansas">KS</option>
+                      <option value="Kentucky">KY</option>
+                      <option value="Louisiana">LA</option>
+                      <option value="Maine">ME</option>
+                      <option value="Marshall Islands">MH</option>
+                      <option value="Maryland">MD</option>
+                      <option value="Massachusetts">MA</option>
+                      <option value="Michigan">MI</option>
+                      <option value="Minnesota">MN</option>
+                      <option value="Mississippi">MS</option>
+                      <option value="Missouri">MO</option>
+                      <option value="Montana">MT</option>
+                      <option value="Nebraska">NE</option>
+                      <option value="Nevada">NV</option>
+                      <option value="New Hampshire">NH</option>
+                      <option value="New Jersey">NJ</option>
+                      <option value="New Mexico">NM</option>
+                      <option value="New York">NY</option>
+                      <option value="North Carolina">NC</option>
+                      <option value="North Dakota">ND</option>
+                      <option value="Northern Mariana Islands">MP</option>
+                      <option value="Ohio">OH</option>
+                      <option value="Oklahoma">OK</option>
+                      <option value="Oregon">OR</option>
+                      <option value="Palau">PW</option>
+                      <option value="Pennsylvania">PA</option>
+                      <option value="Puerto Rico">PR</option>
+                      <option value="Rhode Island">RI</option>
+                      <option value="South Carolina">SC</option>
+                      <option value="South Dakota">SD</option>
+                      <option value="Tennessee">TN</option>
+                      <option value="Texas" selected>TX</option>
+                      <option value="Utah">UT</option>
+                      <option value="Vermont">VT</option>
+                      <option value="Virgin Islands">VI</option>
+                      <option value="Virginia">VA</option>
+                      <option value="Washington">WA</option>
+                      <option value="West Virginia">WV</option>
+                      <option value="Wisconsin">WI</option>
+                      <option value="Wyoming">WY</option>
+                    </select>
+                    <%}%>
+                      <small id="stateHelp" class="form-text text-muted">To calculate the taxes.</small>
             </div>
-            <div class="col-md">
-              <select class="form-control" required name="Year">
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-              </select>
+            <div class="text-center">
+              <input type="text" id="username" name="username" value="<%=username%>" hidden>
+              <button class="btn btn-success fw-bold" type="submit" id="register" disabled>Get
+                Quote</button>
+              <!-- <a class="btn btn-warning fw-bold" href="/history/<%=username%>">View History</a> -->
             </div>
-            <%if (locals.gallon){%>
-              <div style="display: none">
-                <input type="text" name="gallon" value="<%=gallon%>">
-                <input type="text" name="pricePerGallon" value="<%=price%>">
-                <input type="text" name="totalPrice" value="<%=price*gallon%>">
-                <input type="text" name="username" value="<%=username%>">
 
-              </div>
+          </form>
+
+        </div>
+
+
+
+        <div class="col-md-8 px-5">
+
+          <div class="h4 text-secondary">
+            <%if (locals.discount==1){%>
+              <p>You saved for your membership</p>
               <%}%>
+                <%if (locals.price){%>
+                  <p>
+                    Number of gallon: <span class=" h2 text-danger">
+                      <%=gallon%>
+                    </span> gallons
+                  </p>
+                  <p>Your total cost is: <span class=" h2 text-danger">$<%=price*gallon%>
 
+                    </span> or <span class=" h2 text-danger">$<%=price%>
+                        /gallon</span></p>
+
+                  <%}if (!locals.price){%>
+                    Your total cost is: <span class=" h2 text-danger">$___</span> or <span
+                      class=" h2 text-danger">$___/gallon</span>
+                    <%}%>
+          </div>
+          <div class="text-secondary">
+            If you're fine with the price, go ahead and fill the information below to proceed to order!
+          </div>
+          <form method="POST" action="/placeOrder">
+            <div class="form-group my-3">
+              <label for="address">Address for delivery</label>
+              <%if (locals.address){%>
+                <input type="text" class="form-control" name="address" id="address" aria-describedby="addressHelp"
+                  required value="<%=address%>">
+                <%} if(!locals.address){%>
+                  <input type="text" class="form-control" name="address" id="address" aria-describedby="addressHelp"
+                    required placeholder="Address">
+                  <%}%>
+
+
+                    <small id="addressHelp" class="form-text text-muted">This is your address in your profile. Modify it
+                      if
+                      you
+                      want us to deliver to other address.</small>
+            </div>
+
+            <div>
+              <label for="">Date to deliver</label>
+            </div>
+            <div class="row my-3">
+              <div class="col-md">
+                <select class="form-control" name="Month" required aria-describedby="monthHelp">
+                  <option value="">Month</option>
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
+                <small id="monthHelp" class="form-text text-muted">Please allow +-1 day to deliver!</small>
+              </div>
+
+              <div class="col-md">
+                <select class="form-control" name="Day" required>
+                  <option value="">Day</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+              </div>
+              <div class="col-md">
+                <select class="form-control" required name="Year">
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                </select>
+              </div>
+              <%if (locals.gallon){%>
+                <div style="display: none">
+                  <input type="text" name="gallon" value="<%=gallon%>">
+                  <input type="text" name="pricePerGallon" value="<%=price%>">
+                  <input type="text" name="totalPrice" value="<%=price*gallon%>">
+                  <input type="text" name="username" value="<%=username%>">
+
+                </div>
                 <div class="text-center">
                   <button type="submit" class="btn btn-danger fw-bold">Place order!</button>
                 </div>
-        </form>
+                <%} if (!locals.gallon){%>
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-danger fw-bold" disabled>Place order!</button>
+                  </div>
+                  <%}%>
+
+          </form>
+
+
+        </div>
+
+
+
 
 
       </div>
-
-
-
-
-
     </div>
-  </div>
+  </main>
 
 
 
-  </div>
+
+
 
   <section class="footer">
     <p>Contact us: fuel.resource@gmail.com</p>
     <p>Copyright © 2022 Fuel Resource America, Inc.</p>
   </section>
 
+  <!-- <footer class="footer mt-auto py-3">
+    <div class="container">
+      <p>Contact us: fuel.resource@gmail.com</p>
+      <p>Copyright © 2022 Fuel Resource America, Inc.</p>
+    </div>
+
+  </footer> -->
+  <script>
+    function manage(txt) {
+      var bt = document.getElementById('register');
+      if (txt.value != '') {
+        bt.disabled = false;
+      }
+      else {
+        bt.disabled = true;
+      }
+    }
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
 
   <script src="FuelQuote.js"></script>
-  <script src="pricing.js"></script>
 </body>
 
 </html>

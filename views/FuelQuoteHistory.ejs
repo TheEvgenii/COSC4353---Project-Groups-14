@@ -10,7 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
-    <script src="pricing.js"></script>
     <script src="FuelQuote.js"></script>
 </head>
 
@@ -20,50 +19,7 @@
     }
 </style>
 
-<script>
-    let sortDirection = false;
-    let customerData = [
-        { username: 'jose', gallons_requested: 10, date: 1 / 2 / 1, price: 34, gallons: 2 },
-        { username: 'jose', gallons_requested: 10, date: 1 / 2 / 1, price: 34, gallons: 3 }
-    ];
 
-    window.onload = () => {
-        loadTableData(customerData);
-    };
-
-
-    function loadTableData(customerData) {
-        const customerBody = document.getElementById('customerData');
-        let dataHtml = '';
-
-        for (let customer of customerData) {
-            dataHtml += '<tr><td>${customer.username}</td><td>${customer.gallons_requested}</td><td>${customer.date}</td><td>${customer.price}</td><td>${customer.gallons}</td></tr>';
-
-        }
-        console.log(dataHtml)
-        customerBody.innerHTML = dataHtml;
-    }
-
-    function sortColumn(columnName) {
-        const dataType = typeof customerData[0][columnName];
-        sortDirection = !sortDirection;
-
-        switch (dataType) {
-            case 'number':
-                sortNumberColumn(sortDirection, columnName);
-                break;
-        }
-
-        loadTableData(customerData);
-    }
-
-    function sortNumberColumn(sort, columnName) {
-        customerData = customerData.sort((p1, p2) => {
-            return sort ? p1[columnName] - p2[columnName] : p2[columnName] - p1[columnName]
-        });
-    }
-
-</script>
 
 <body>
     <header>
@@ -87,7 +43,13 @@
                             <a class="nav-link text-dark h4" href="/">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark h4" href="/history">History</a>
+                            <a class="nav-link text-dark h4" href="/modifyProfile/<%=username%>">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark h4" href="/history/<%=username%>">History</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark h4" href="/fuelquote/<%=username%>">Get Quote</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-danger h4" href="/signin">Log Out</a>
@@ -109,7 +71,7 @@
         </div>
     </section>
 
-    <section class="bg-light text-dark pt-5 text-center">
+    <section class=" text-dark pt-5 text-center">
         <div class="conrainer">
             <div class="">
                 <div>
@@ -119,22 +81,22 @@
         </div>
     </section>
 
-    <section class="bg-light text-dark pt-1 text-center">
+    <!-- <section class=" text-dark pt-1 text-center">
         <div class="container">
             <div class="d-sm-flex">
                 <div>
-                    <h4> Welcome to your transactions </h4>
-                    <p></p>
+                    <h4> Your orders: </h4>
                     <ul class="nav justify-content-center">
                         <li class="nav-item">
-                            <a class="btn btn-primary" href="/fuelquote">New Transaction</a>
+                            <a class="btn btn-primary" href="/fuelquote/<%=username%>">New Transaction</a>
                         </li>
                     </ul>
                 </div>
                 <img class="img-fluid w-25 " src="creditcard.svg" alt="">
             </div>
         </div>
-    </section>
+    </section> -->
+
 
     <!--<fieldset>
             <legend>Local Storage</legend>
@@ -144,7 +106,7 @@
     <!--Tables-->
 
 
-    <section class="bg-light text-dark pt-1 text-center">
+    <!-- <section class="bg-light text-dark pt-1 text-center">
         <div class="container">
             <table class="table">
                 <thead class="thead-dark">
@@ -160,14 +122,100 @@
                 </tbody>
             </table>
         </div>
+    </section> -->
+
+    <section class=" p-3 text-center">
+        <div class="container">
+            <div class="d-flex justify-content-center mt-5">
+                <table class="table table-bordered">
+                    <thead class="thread-dark">
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Gallons</th>
+                            <th scope="col">Delivery Date</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Price/Gallon</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (let row of data){ %>
+                            <tr>
+                                <% for (let key of Object.keys(row)){ %>
+                                    <%const element=row[key] %>
+                                        <td>
+                                            <%=element %>
+                                        </td>
+                                        <% } %>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+            </div>
+
+
+
+        </div>
     </section>
 
+    <div class="container text-center">
+        <p class="h4 text-muted">Want to make a new order? <a style="color: red" href="/fuelquote/<%=username%>">Let's
+                go</a> </p>
+
+    </div>
 
 
 
     </div>
 
+    <!-- <script>
 
+        let sortDirection = false;
+
+        let customerData = [
+            { username: '<%-data.length %>', gallons_requested: 10, date: 1 / 2 / 1, price: 34, gallons: 2 },
+            { username: 'jose', gallons_requested: 10, date: 1 / 2 / 1, price: 34, gallons: 3 }
+        ];
+        window.onload = () => {
+            loadTableData(<% -data %>);
+
+        };
+
+
+        function loadTableData(customerData) {
+            const customerBody = document.getElementById('customerData');
+
+            let dataHtml = '';
+
+            for (let customer of customerData) {
+                dataHtml += `<tr><td>${customer.username}</td><td>${customer.gallon}</td><td>${customer.deliverydate}</td><td>${customer.price}</td><td>${customer.pricepergalon}</td></tr>`;
+
+            }
+            console.log(dataHtml)
+            customerBody.innerHTML = dataHtml;
+        }
+
+        function sortColumn(columnName) {
+            const dataType = typeof customerData[0][columnName];
+            sortDirection = !sortDirection;
+
+            switch (dataType) {
+                case 'number':
+                    sortNumberColumn(sortDirection, columnName);
+                    break;
+            }
+
+            loadTableData(customerData);
+        }
+
+        function sortNumberColumn(sort, columnName) {
+            customerData = customerData.sort((p1, p2) => {
+                return sort ? p1[columnName] - p2[columnName] : p2[columnName] - p1[columnName]
+            });
+        }
+
+    </script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>

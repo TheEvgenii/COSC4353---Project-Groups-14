@@ -1,3 +1,4 @@
+const { profile } = require("console");
 const express = require("express");
 const { ClientRequest } = require("http");
 const path = require('path');
@@ -34,15 +35,16 @@ app.get('/fuelquote/:username', (req, res) => {
     res.render('FuelQuote', { "username": username })
 })
 
-app.get('/fuelquote/:username/:gallon/:state/:price', async (req, res) => {
+app.get('/fuelquote/:username/:gallon/:state/:price/:discount', async (req, res) => {
     const username = req.params.username
     const gallon = req.params.gallon
     const state = req.params.state
     const price = req.params.price
+    const discount = req.params.discount
     try {
         let data = await client.query(`SELECT address1,city,state from profiles where username='${username}'`)
         let address = data.rows[0].address1 + ", " + data.rows[0].city + ", " + data.rows[0].state
-        res.render('FuelQuote', { "username": username, "gallon": gallon, "state": state, "price": price, "address": address })
+        res.render('FuelQuote', { "username": username, "gallon": gallon, "state": state, "price": price, "address": address, "discount": discount })
     }
     catch (e) {
         console.log(e)
@@ -50,15 +52,35 @@ app.get('/fuelquote/:username/:gallon/:state/:price', async (req, res) => {
 
 })
 //Get Fuel Quote History page
-app.get('/history/:username', (req, res) => {
+app.get('/history/:username', async (req, res) => {
     const { username } = req.params
-    res.render('FuelQuoteHistory')
+    try {
+        let data = await client.query(`SELECT * from HISTORY WHERE username='${username}'`)
+        res.render('FuelQuoteHistory', { "username": username, "data": data.rows })
+    }
+    catch (e) {
+        console.log(e)
+    }
+
 })
 
 //Profile of username request
 app.get('/profile/:username', (req, res) => {
     const { username } = req.params
     res.render('profile', { "username": username })
+})
+
+app.get('/modifyProfile/:username', async (req, res) => {
+    const { username } = req.params
+    let data = await client.query(`SELECT * FROM PROFILES WHERE USERNAME='${username}'`)
+    let fullname = data.rows[0].fullname
+    let address1 = data.rows[0].address1
+    let address2 = data.rows[0].address2
+    let city = data.rows[0].city
+    let state = data.rows[0].state
+    let zipcode = data.rows[0].zipcode
+
+    res.render('profile', { "username": username, "fullname": fullname, "address1": address1, "address2": address2, "city": city, "state": state, "zipcode": zipcode })
 })
 
 //Signup request
@@ -86,6 +108,17 @@ app.post('/profile', async (req, res) => {
         console.log(e)
     }
 
+})
+
+app.post('/modifyProfile', async (req, res) => {
+    let profile = req.body
+    try {
+        await client.query(`UPDATE PROFILES SET FULLNAME = '${profile.fullName}',ADDRESS1='${profile.address_1}',ADDRESS2='${profile.address_2}',CITY='${profile.city}',STATE='${profile.state}',ZIPCODE='${profile.zipcode}' WHERE USERNAME='${profile.username}'`)
+        res.redirect(`/fuelquote/${profile.username}`)
+    }
+    catch (e) {
+        console.log(e)
+    }
 })
 
 
@@ -198,9 +231,11 @@ app.get('/checkPrice', async (req, res) => {
             locfactor = 0.02;
         }
         hisfactor = 0
+        let discount = 0
         let data = await client.query(`SELECT COUNT(*) FROM HISTORY WHERE USERNAME='${req.query.username}'`)
         if (data.rows[0].count > 0) {
             hisfactor = 0.01
+            discount = 1
         }
 
         gallnumTax = 0.02;
@@ -209,7 +244,7 @@ app.get('/checkPrice', async (req, res) => {
         }
         cumprofit = 0.1;
         let suggestPricePerGallon = ((locfactor - hisfactor + gallnumTax + cumprofit) * pricePerGallon) + pricePerGallon;
-        res.redirect(`/fuelquote/${req.query.username}/${gallon}/${state}/${suggestPricePerGallon}`)
+        res.redirect(`/fuelquote/${req.query.username}/${gallon}/${state}/${suggestPricePerGallon}/${discount}`)
     }
     catch (e) {
         console.log(e)
