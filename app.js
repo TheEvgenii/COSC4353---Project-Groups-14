@@ -236,6 +236,7 @@ app.get('/checkPrice', async (req, res) => {
         if (data.rows[0].count > 0) {
             hisfactor = 0.01
             discount = 1
+
         }
 
         gallnumTax = 0.02;
